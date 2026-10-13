@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Global Language Guesser</title>
     <style> 
-     body {
+        body {
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #f0f4f8;
@@ -19,117 +19,86 @@
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-    button {
-            background-color: #3182ce;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 15px;
-        }
+
+        /* Mode Colors */
+        .easy-btn { background-color: #38a169; }
+        .easy-btn:hover { background-color: #2f855a; }
+        
+        .medium-btn { background-color: #dd6b20; }
+        .medium-btn:hover { background-color: #c05621; }
+        
+        .hard-btn { background-color: #e53e3e; }
+        .hard-btn:hover { background-color: #c53030; }
 
         button:hover {
-            background-color: #000000;
+            transform: scale(1.02);
         }
-
-       input {
-        padding: 10px;
-        font-size: 16px;
-        width: 80%;
-        border: 2px solid #cbd5e0;
-        border-radius: 6px;
-        text-align: center;
-       }
-
-       #message {
-        font-weight: bold;
-        margin-top: 15px;
-        font-size: 18px;
-         }
     </style>
 </head>
 <body>
     
     <h1>Welcome to My Arcade Homepage</h1>
-    <p>I am building this game for myself to earn a new computer! And for you guys to level up your language skills!</p>
 
-     <!-- THE GAME CONTAINER -->
-    <div class="game-box">
-        <h2>Language Guessing Game</h2>
-        <p>What country speaks this language?</p>
+
+    <div style="position: fixed; top: 20%; left: 5%; font-size: 50px; opacity: 0.2; transform: rotate(-15deg); user-select: none;">🗺️ 🧭 🌍</div>
+    <div style="position: fixed; top: 25%; right: 5%; font-size: 50px; opacity: 0.2; transform: rotate(15deg); user-select: none;">🗺️ 🧭 🌏</div>
+    <div style="position: fixed; bottom: 15%; left: 8%; font-size: 50px; opacity: 0.2; transform: rotate(10deg); user-select: none;">🗺️ 🧭 🌎</div>
+    <div style="position: fixed; bottom: 20%; right: 8%; font-size: 50px; opacity: 0.2; transform: rotate(-10deg); user-select: none;">🗺️ 🧭 🌍</div>
+
+
+    <div class="game-box" style="border-top: 8px solid #3182ce; position: relative; overflow: hidden;">
+        <span style="background: #edf2f7; color: #4a5568; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Arcade Edition V2</span>
+
+        <h2 style="color:#2d3748; margin-top: 15px; font-size: 28px;">Select a Game Mode</h2>
+        <p style="color:#718096; font-size: 15px; max-width: 400px; margin: 0 auto 25px auto; line-height: 1.5;">
+            Choose a challenge tier below to test your audio-visual translation speed. Each mode features entirely unique scripts, regional dialects, and native alphabets.
+        </p>
         
-        <!-- The language sample text -->
-        <h1 id="language-phrase" style="color: #2d3748; background: #edf2f7; padding: 20px; border-radius: 8px;">Bonjour! Comment ça va?</h1>
+        <div style="display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%;">
+            
+            <a href="easy.html" style="text-decoration: none; display: block; width: 90%;">
+                <button class="easy-btn" style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 15px 20px; font-size: 18px; font-weight: bold; border-radius: 8px; border: none; color: white; cursor: pointer; transition: transform 0.2s;" onmouseover="playTone(440, 'sine', 0.05)" onclick="playTone(587.33, 'triangle', 0.15)">
+                    <span>🟢 Easy Mode</span>
+                    <span style="font-size: 24px;">🎮 📖</span>
+                </button>
+            </a>
 
-        <input type="text" id="user-guess" placeholder="Type country name here...">
-        <br>
-        <button onclick="checkAnswer()">Submit Guess</button>
+            
+            <a href="medium.html" style="text-decoration: none; display: block; width: 90%;">
+                <button class="medium-btn" style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 15px 20px; font-size: 18px; font-weight: bold; border-radius: 8px; border: none; color: white; cursor: pointer; transition: transform 0.2s;" onmouseover="playTone(493.88, 'sine', 0.05)" onclick="playTone(659.25, 'triangle', 0.15)">
+                    <span>🟠 Medium Mode</span>
+                    <span style="font-size: 24px;">🏹 🗺️</span>
+                </button>
+            </a>
 
-        <p id="message"></p>
+           
+            <a href="hard.html" style="text-decoration: none; display: block; width: 90%;">
+                <button class="hard-btn" style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 15px 20px; font-size: 18px; font-weight: bold; border-radius: 8px; border: none; color: white; cursor: pointer; transition: transform 0.2s;" onmouseover="playTone(523.25, 'sine', 0.05)" onclick="playTone(783.99, 'triangle', 0.15)">
+                    <span>🔴 Hard Mode</span>
+                    <span style="font-size: 24px;">👑 🌋</span>
+                </button>
+            </a>
+            
+        </div>
     </div>
 
+  
     <script>
-        const gameData = [
-            {phrase: "Bonjour! Comment ça va?", country: "France"},
-            {phrase: "Hola! ¿Cómo estás?", country: "Spain"},
-            {phrase: "Hallo! Wie geht's?", country: "Germany"},
-            {phrase: "Ciao! Come stai?", country: "Italy"},
-            {phrase: "Olá! Como você está?", country: "Brazil"},
-            {phrase: "Namaste! Aap kaise hain?", country: "India"},
-            {phrase: "Konnichiwa! O genki desu ka?", country: "Japan"},
-            {phrase: "Nihao! Nǐ hǎo ma?", country: "China"},
-            {phrase: "Priyet! Kak dela?", country: "Russia"},
-            {phrase: "Hello! How are you doing today?", country: "United States"},
-            {phrase: "G'Day Mate! How ya going?", country: "Australia"},
-            {phrase: "Annyeonghaseyo!", country: "South Korea"},
-            {phrase: "Merhaba! Nasılsın?", country: "Turkey"},
-            {phrase: "Ahlan! Kayfa haluk?", country: "Egypt"}, 
-            {phrase: "Shalom! Ma shlomcha?", country: "Israel"},
-            {phrase: "Sawubona! Unjani?", country: "South Africa"},
-            {phrase: "As-salamu alaykum!", country: "Saudi Arabia"},
-            {phrase: "Sawadee khrap! Sabai dee mai", country: "Thailand"},
-            {phrase: "Halo! Apa kabar?", country: "Indonesia"},
-            {phrase: "Jambo! Habari gani", country: "Kenya"},
-            {phrase: "Chao ban! Khoe khong", country: "Vietnam"},
-            {phrase: "¡Che! ¿Cómo andás? ¿Todo bien?", country: "Argentina"},
-            {phrase: "Olá! Como está? Tudo bem?", country: "Portugal"}
-
-        ];
-        
-        let currentRound = 0;
-
-        function checkAnswer() {
-            const guessInput = document.getElementById('user-guess');
-            const messageElement = document.getElementById('message');
-            const userGuess = guessInput.value.trim().toLowerCase();
-            const correctCountry = gameData[currentRound].country.toLowerCase();
-
-            if (userGuess === correctCountry) {
-                messageElement.style.color = 'green';
-                messageElement.innerText = "🎉 Correct! Awesome job!";
-
-                // Wait 2 seconds, then automatically move to the next round!
-                setTimeout(nextRound, 2000);
-            } else {
-                messageElement.style.color = 'red';
-                messageElement.innerText = "❌ Not quite! Try again!";
-            }
-        }
-
-        function nextRound() {
-            currentRound = currentRound + 1;
-
-            // Go back to the first language if we run out of rounds
-            if (currentRound >= gameData.length) {
-                currentRound = 0;
-            }
-
-            // Update the screen with the new phrase
-            document.getElementById('language-phrase').innerText = gameData[currentRound].phrase;
-            document.getElementById('user-guess').value = '';
-            document.getElementById('message').innerText = '';
+        function playTone(frequency, type, duration) {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                const audioCtx = new AudioContext();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.type = type;
+                oscillator.frequency.value = frequency;
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
         }
     </script>
 </body>
